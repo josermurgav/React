@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+//import React from "react"
+import {useState,useReducer} from "react";
+import './App.css';
+import chef from "./images/chef.jpg"
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+// let language="React";
+// let moon="😋";
+const items =["Macaroni and Cheese",
+              "Salmon with Potates",
+              "Tofu with Vegetables",
+              "Minestrone Soup"
+            ];
+
+const dishObjects =items.map((dish,i)=>({
+  id:i,
+  title: dish
+}));
+//console.log(dishObjects);
+// eslint-disable-next-line react/prop-types
+function Header({ name, year})
+{
+  //console.log(name);
+  return(
+    <header>
+      <h1>{name}&apos;s Kitchen</h1>
+      <p>Copyright {year}</p>
+    </header>
+  );
+}
+// eslint-disable-next-line react/prop-types
+function Main({dishes, openStatus, onStatus}){
+  return(
+  <>
+    <div>
+      {/* <button onClick={()=>onStatus(!openStatus)}>I want to be {!openStatus?"open":"closed"}</button> */}
+      <button onClick={onStatus}>I want to be {!openStatus?"open":"closed"}</button>
+      <h2>Welcome!{openStatus?"Open":"Closed"}</h2>
+    </div>
+    <img 
+      src={chef} 
+      height={200} 
+      alt="Photo of chef owner"
+    />
+    <ul>
+      {
+        // eslint-disable-next-line react/prop-types
+        dishes.map((dish)=>(<li key={dish.id} style={{listStyleType:"none"}}>
+                              {dish.title}
+                            </li>
+                            ))
+      }
+    </ul>
+  </>
+  );
 }
 
-export default App
+function App() {
+  
+  //const [status, setStatus]=useState(true);  
+  const [status, toggle]=useReducer((status)=> !status , true );  
+  return(
+    <div>
+      <h1>The restaurant is currently {status? "open":"closed"}.</h1>
+      {/* <button onClick={()=>setStatus(!status)}>{!status? "Open":"Close"} Restaurant</button>       */}
+      <button onClick={toggle}>{!status? "Open":"Close"} Restaurant</button>
+      <Header name="Alex" year={new Date().getFullYear()}/>
+      {/* <Main dishes ={dishObjects} openStatus ={status} onStatus={setStatus}/>     */}
+      <Main dishes ={dishObjects} openStatus ={status} onStatus={toggle}/>    
+    </div>    
+  );
+}
+
+export default App;
