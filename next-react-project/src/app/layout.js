@@ -39,7 +39,7 @@ function Header()
         </nav>
       </div>
     </header>
-  )
+  );
 }
 
 export default function RootLayout({ children }) {
