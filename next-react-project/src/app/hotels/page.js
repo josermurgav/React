@@ -1,4 +1,4 @@
-import Image from "next/image";
+import HotelBlock from "./HotelBlock";
 
 async function getData()
 {
@@ -8,21 +8,21 @@ async function getData()
     return res.json();
 }
 
-function HotelBlock({id,name,capacity, cost}){
+// function HotelBlock({id,name,capacity, cost}){
     
-    const imageLoader=({src}) =>{ 
-        return `./hotels/${src}.jpeg`
-    }
-    return (
-        <tr>
-            <td>{name}</td>
-            <td>{capacity}</td>
-            <td>{cost}</td>
-            <Image scr={id} width={300} height={300} loader={imageLoader}/>
-        </tr>
-    );
+//     const imageLoader=({src}) =>{ 
+//         return `./hotels/${src}.jpeg`
+//     }
+//     return (
+//         <tr>
+//             <td>{name}</td>
+//             <td>{capacity}</td>
+//             <td>{cost}</td>
+//             <Image scr={id} width={300} height={300} loader={imageLoader}/>
+//         </tr>
+//     );
 
-}
+// }
 
 export default async function Page()
 {
@@ -32,20 +32,20 @@ export default async function Page()
             <div>
                 <h1>Hotel Details</h1>
                 {/* <div>{JSON.stringify(data)}</div> */}
-                <table>
-                <thead>
+                <div>
+                {/* <thead>
                     <tr>
                         <th>Hotel Name</th>
                         <th>Capacity</th>
                         <th>Cost</th>
                     </tr>                    
-                </thead>
-                <tbody>
-                    {data.map((hotel)=>(
-                        <HotelBlock id={hotel.id} name={hotel.name} capacity={hotel.capacity} cost={hotel.avgCost}/>
-                    ))}
-                </tbody>                
-            </table>
+                </thead> */}
+                
+                {data.map((hotel)=>(
+                    <HotelBlock id={hotel.id} name={hotel.name} capacity={hotel.capacity} cost={hotel.avgCost}/>
+                ))}
+                                
+            </div>
             </div>
         </main>
     )
